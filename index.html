@@ -1,0 +1,483 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" dir="ltr">	
+	<head>
+		<title>TroopCalc</title>
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+		<style>
+			body
+			{
+				color: #000;
+				background-color: #FFF;
+				font-size:0.9em;
+				font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+			}
+			#container
+			{
+				width:750px;
+				border:0px solid red;
+				margin: 0 auto 0 auto;
+				text-align: center;
+			}
+			#slidercontainer
+			{
+				white-space: nowrap;
+				border: 0px solid black;
+				width:500;
+				margin: 0 auto 0 auto;
+				padding-left:5em;
+			}
+			#info
+			{
+				font-size:0.7em;
+			}
+			label
+			{
+				width: 3em;
+				text-align: right;
+				margin-right: 0.5em;
+				display: in-line;
+			}
+			input, select
+			{
+				color: #781351;
+				background: #fee3ad;
+				border: 1px solid #781351;
+				width: 8em;
+			}
+			div.extraclass
+			{
+				width:15em;
+				float:left;
+			}
+			dl,dt,dd
+		        {
+			        margin:0;
+			        padding:0;
+			        text-align:left;
+			}
+			dt
+			{
+			        width:9em;
+			        float:left;
+			        clear:left;
+			        padding:0 0 4px 0;
+			}
+			dd
+			{
+				margin-left:5em;
+			        padding-bottom:4px;
+		        }
+			.attribs
+			{
+				margin:1px 0 -7px 400px;
+			}
+		</style>
+		<script type="text/javascript">
+			function totalResources()
+			{
+				var wood = +document.getElementById('wood').value;
+				var clay = +document.getElementById('clay').value;
+				var iron = +document.getElementById('iron').value;
+				var crop = +document.getElementById('crop').value;
+				
+				var varTotalResources = wood + clay + iron + crop;
+				document.getElementById('total').value= varTotalResources;
+
+				return varTotalResources;
+			}
+			function updateTroopCount()
+			{
+				var t1 = +document.getElementById('slider-1').value;
+				var t2 = +document.getElementById('slider-2').value;
+				var t3 = +document.getElementById('slider-3').value;
+				var t4 = +document.getElementById('slider-4').value;
+				var t5 = +document.getElementById('slider-5').value;
+				var t6 = +document.getElementById('slider-6').value;
+				var t7 = +document.getElementById('slider-7').value;
+				var t8 = +document.getElementById('slider-8').value;
+				var t9 = +document.getElementById('slider-9').value;
+				var t10 = +document.getElementById('slider-10').value;
+				var tPer = t1 + t2 + t3 + t4 + t5 + t6 + t7 + t8 + t9 + t10;
+				
+				var tResources = +document.getElementById('total').value / 100;
+				var tRCount1 = t1 * tResources;
+				var tRCount2 = t2 * tResources;
+				var tRCount3 = t3 * tResources;
+				var tRCount4 = t4 * tResources;
+				var tRCount5 = t5 * tResources;
+				var tRCount6 = t6 * tResources;
+				var tRCount7 = t7 * tResources;
+				var tRCount8 = t8 * tResources;
+				var tRCount9 = t9 * tResources;
+				var tRCount10 = t10 * tResources;
+				
+				var activeRace = document.getElementById('race').value;
+				var races = new Array();
+				races['gaul'] = new Array();
+					races['gaul'][1] = new Array(100,130,55,30,315,15,40,50,1);
+					races['gaul'][2] = new Array(140,150,185,60,535,65,35,20,1);
+					races['gaul'][3] = new Array(170,150,20,40,380,0,20,10,2);
+					races['gaul'][4] = new Array(350,450,230,60,1090,90,25,40,2);
+					races['gaul'][5] = new Array(360,330,280,120,1090,45,115,55,2);
+					races['gaul'][6] = new Array(500,620,675,170,1965,140,50,165,3);
+					races['gaul'][7] = new Array(950,555,330,75,1910,50,30,105,3);
+					races['gaul'][8] = new Array(960,1450,630,90,3130,70,45,10,6);
+					races['gaul'][9] = new Array(30750,45400,31000,37500,144650,40,50,50,4);
+					races['gaul'][10] = new Array(5500,7000,5300,4900,22700,0,80,80,1);
+				races['roman'] = new Array();
+					races['roman'][1] = new Array(120,100,180,40,440,40,35,50,1);
+					races['roman'][2] = new Array(100,130,160,70,460,30,65,35,1);
+					races['roman'][3] = new Array(150,160,210,80,600,70,40,25,1);
+					races['roman'][4] = new Array(140,160,20,40,360,0,20,10,2);
+					races['roman'][5] = new Array(550,440,320,100,1410,120,65,50,3);
+					races['roman'][6] = new Array(550,640,800,180,2170,180,80,105,4);
+					races['roman'][7] = new Array(900,360,500,70,1830,60,30,75,3);
+					races['roman'][8] = new Array(950,1350,600,90,2990,75,60,10,6);
+					races['roman'][9] = new Array(30750,27200,45000,37500,140450,50,40,30,5);
+					races['roman'][10] = new Array(5800,5300,7200,5500,23800,0,80,80,1);
+				races['teuton'] = new Array();
+					races['teuton'][1] = new Array(95,75,40,40,250,40,20,5,1);
+					races['teuton'][2] = new Array(145,70,85,40,340,10,35,60,1);
+					races['teuton'][3] = new Array(130,120,170,70,490,60,30,30,1);
+					races['teuton'][4] = new Array(160,100,50,50,360,0,10,5,1);
+					races['teuton'][5] = new Array(370,270,290,75,1005,55,100,40,2);
+					races['teuton'][6] = new Array(450,515,480,80,1525,150,50,75,3);
+					races['teuton'][7] = new Array(1000,300,350,70,1720,65,30,80,3);
+					races['teuton'][8] = new Array(900,1200,600,60,2760,50,60,10,6);
+					races['teuton'][9] = new Array(35500,26600,25000,27200,114300,40,60,40,4);
+					races['teuton'][10] = new Array(7200,5500,5800,6500,25000,10,80,80,1);
+
+				var tTotal1 = races[activeRace][1][4];
+				var tTotal2 = races[activeRace][2][4];
+				var tTotal3 = races[activeRace][3][4];
+				var tTotal4 = races[activeRace][4][4];
+				var tTotal5 = races[activeRace][5][4];
+				var tTotal6 = races[activeRace][6][4];
+				var tTotal7 = races[activeRace][7][4];
+				var tTotal8 = races[activeRace][8][4];
+				var tTotal9 = races[activeRace][9][4];
+				var tTotal10 = races[activeRace][10][4];
+
+				var tCount1 = Math.floor(tRCount1 / tTotal1);
+				document.getElementById('tq-1').innerHTML= tCount1;
+				var tCount2 = Math.floor(tRCount2 / tTotal2);
+				document.getElementById('tq-2').innerHTML= tCount2;
+				var tCount3 = Math.floor(tRCount3 / tTotal3);
+				document.getElementById('tq-3').innerHTML= tCount3;
+				var tCount4 = Math.floor(tRCount4 / tTotal4);
+				document.getElementById('tq-4').innerHTML= tCount4;
+				var tCount5 = Math.floor(tRCount5 / tTotal5);
+				document.getElementById('tq-5').innerHTML= tCount5;
+				var tCount6 = Math.floor(tRCount6 / tTotal6);
+				document.getElementById('tq-6').innerHTML= tCount6;
+				var tCount7 = Math.floor(tRCount7 / tTotal7);
+				document.getElementById('tq-7').innerHTML= tCount7;
+				var tCount8 = Math.floor(tRCount8 / tTotal8);
+				document.getElementById('tq-8').innerHTML= tCount8;
+				var tCount9 = Math.floor(tRCount9 / tTotal9);
+				document.getElementById('tq-9').innerHTML= tCount9;
+				var tCount10 = Math.floor(tRCount10 / tTotal10);
+				document.getElementById('tq-10').innerHTML= tCount10;
+				
+				var tTotal = tCount1 + tCount2 + tCount3 + tCount4 + tCount5 + tCount6 + tCount7 + tCount8 + tCount9 + tCount10;
+
+
+				var totalWood = (races[activeRace][1][0] * tCount1) + (races[activeRace][2][0] * tCount2) + (races[activeRace][3][0] * tCount3) + (races[activeRace][4][0] * tCount4) + (races[activeRace][5][0] * tCount5) + (races[activeRace][6][0] * tCount6) + (races[activeRace][7][0] * tCount7) + (races[activeRace][8][0] * tCount8) + (races[activeRace][9][0] * tCount9) + (races[activeRace][10][0] * tCount10);
+				var totalClay = (races[activeRace][1][1] * tCount1) + (races[activeRace][2][1] * tCount2) + (races[activeRace][3][1] * tCount3) + (races[activeRace][4][1] * tCount4) + (races[activeRace][5][1] * tCount5) + (races[activeRace][6][1] * tCount6) + (races[activeRace][7][1] * tCount7) + (races[activeRace][8][1] * tCount8) + (races[activeRace][9][1] * tCount9) + (races[activeRace][10][1] * tCount10);
+				var totalIron = (races[activeRace][1][2] * tCount1) + (races[activeRace][2][2] * tCount2) + (races[activeRace][3][2] * tCount3) + (races[activeRace][4][2] * tCount4) + (races[activeRace][5][2] * tCount5) + (races[activeRace][6][2] * tCount6) + (races[activeRace][7][2] * tCount7) + (races[activeRace][8][2] * tCount8) + (races[activeRace][9][2] * tCount9) + (races[activeRace][10][2] * tCount10);
+				var totalCrop = (races[activeRace][1][3] * tCount1) + (races[activeRace][2][3] * tCount2) + (races[activeRace][3][3] * tCount3) + (races[activeRace][4][3] * tCount4) + (races[activeRace][5][3] * tCount5) + (races[activeRace][6][3] * tCount6) + (races[activeRace][7][3] * tCount7) + (races[activeRace][8][3] * tCount8) + (races[activeRace][9][3] * tCount9) + (races[activeRace][10][3] * tCount10);
+
+				var resLeft = document.getElementById('total').value - (totalWood + totalClay + totalIron + totalCrop)
+
+				var totalAP =  (races[activeRace][1][5] * tCount1) + (races[activeRace][2][5] * tCount2) + (races[activeRace][3][5] * tCount3) + (races[activeRace][4][5] * tCount4) + (races[activeRace][5][5] * tCount5) + (races[activeRace][6][5] * tCount6) + (races[activeRace][7][5] * tCount7) + (races[activeRace][8][5] * tCount8) + (races[activeRace][9][5] * tCount9) + (races[activeRace][10][5] * tCount10);
+				var totalDI =  (races[activeRace][1][6] * tCount1) + (races[activeRace][2][6] * tCount2) + (races[activeRace][3][6] * tCount3) + (races[activeRace][4][6] * tCount4) + (races[activeRace][5][6] * tCount5) + (races[activeRace][6][6] * tCount6) + (races[activeRace][7][6] * tCount7) + (races[activeRace][8][6] * tCount8) + (races[activeRace][9][6] * tCount9) + (races[activeRace][10][6] * tCount10);
+				var totalDC =  (races[activeRace][1][7] * tCount1) + (races[activeRace][2][7] * tCount2) + (races[activeRace][3][7] * tCount3) + (races[activeRace][4][7] * tCount4) + (races[activeRace][5][7] * tCount5) + (races[activeRace][6][7] * tCount6) + (races[activeRace][7][7] * tCount7) + (races[activeRace][8][7] * tCount8) + (races[activeRace][9][7] * tCount9) + (races[activeRace][10][7] * tCount10);
+				var cropUse =  (races[activeRace][1][8] * tCount1) + (races[activeRace][2][8] * tCount2) + (races[activeRace][3][8] * tCount3) + (races[activeRace][4][8] * tCount4) + (races[activeRace][5][8] * tCount5) + (races[activeRace][6][8] * tCount6) + (races[activeRace][7][8] * tCount7) + (races[activeRace][8][8] * tCount8) + (races[activeRace][9][8] * tCount9) + (races[activeRace][10][8] * tCount10);
+
+
+				for(i = 1; i <= 10; i++)
+				{
+					document.getElementById('ap-'+i).innerHTML= races[activeRace][i][5] * document.getElementById('tq-'+i).innerHTML;
+					document.getElementById('di-'+i).innerHTML= races[activeRace][i][6] * document.getElementById('tq-'+i).innerHTML;
+					document.getElementById('dc-'+i).innerHTML= races[activeRace][i][7] * document.getElementById('tq-'+i).innerHTML;
+				}
+
+				document.getElementById('totaltroops').innerHTML= tTotal;
+				document.getElementById('totalwood').innerHTML= totalWood;
+				document.getElementById('totalclay').innerHTML= totalClay;
+				document.getElementById('totaliron').innerHTML= totalIron;
+				document.getElementById('totalcrop').innerHTML= totalCrop;
+				document.getElementById('totalap').innerHTML= totalAP;
+				document.getElementById('totaldi').innerHTML= totalDI;
+				document.getElementById('totaldc').innerHTML= totalDC;
+				document.getElementById('cropuse').innerHTML= cropUse;
+				if(resLeft < 0) resLeft = '<font color="red">'+resLeft+'</font>';				
+				document.getElementById('rest').innerHTML= resLeft;
+			}
+			function updateTroops(race)
+			{
+				if(race == 'gaul'){
+					document.getElementById('slider-1-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/21.gif"/>Phalanx:';
+					document.getElementById('slider-2-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/22.gif"/>Swordsman:';
+					document.getElementById('slider-3-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/23.gif"/>Pathfinder:';
+					document.getElementById('slider-4-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/24.gif"/>Thunder:';
+					document.getElementById('slider-5-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/25.gif"/>Druidrider:';
+					document.getElementById('slider-6-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/26.gif"/>Haeduan:';
+					document.getElementById('slider-7-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/27.gif"/>Ram:';
+					document.getElementById('slider-8-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/28.gif"/>Trebuchet:';
+					document.getElementById('slider-9-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/29.gif"/>Chief:';
+					document.getElementById('slider-10-label').innerHTML= '<img src="http://speed.travian.us/img/un/u/30.gif"/>Settler:';
+				}
+				if(race == 'roman'){
+					document.getElementById('slider-1-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/1.gif"/>Legionnaire:';
+					document.getElementById('slider-2-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/2.gif"/>Praetorian:';
+					document.getElementById('slider-3-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/3.gif"/>Imperian:';
+					document.getElementById('slider-4-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/4.gif"/>Legati:';
+					document.getElementById('slider-5-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/5.gif"/>Imperatoris:';
+					document.getElementById('slider-6-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/6.gif"/>Caesaris:';
+					document.getElementById('slider-7-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/7.gif"/>Ram:';
+					document.getElementById('slider-8-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/8.gif"/>Catapult:';
+					document.getElementById('slider-9-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/9.gif"/>Senator:';
+					document.getElementById('slider-10-label').innerHTML= '<img src="http://speed.travian.us/img/un/u/10.gif"/>Settler:';
+				}
+				if(race == 'teuton'){
+					document.getElementById('slider-1-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/11.gif"/>Maceman:';
+					document.getElementById('slider-2-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/12.gif"/>Spearman:';
+					document.getElementById('slider-3-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/13.gif"/>Axeman:';
+					document.getElementById('slider-4-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/14.gif"/>Scout:';
+					document.getElementById('slider-5-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/15.gif"/>Paladin:';
+					document.getElementById('slider-6-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/16.gif"/>Knight:';
+					document.getElementById('slider-7-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/17.gif"/>Ram:';
+					document.getElementById('slider-8-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/18.gif"/>Catapult:';
+					document.getElementById('slider-9-label').innerHTML=  '<img src="http://speed.travian.us/img/un/u/19.gif"/>Chieftain:';
+					document.getElementById('slider-10-label').innerHTML= '<img src="http://speed.travian.us/img/un/u/20.gif"/>Settler:';
+				}
+			}
+		</script>
+		<script type="text/javascript" src="./slider.js"></script>
+		<link rel="stylesheet" type="text/css" media="screen, projection" href="./slider.css" />
+	</head>
+	<body onload="updateTroops(document.getElementById('race').value);">
+	  <div id='container'>
+	    <h1><img src="troopcalc.png" title="TroopCalc"/></h1>
+		<div id='calcform'>
+		  <form onSubmit="return totalResources()">
+		    <label for='wood'><img src="1.gif" width="18" height="12">Wood: <input id='wood' name='wood' value="0" onkeyup="totalResources();"/></label>
+		    <label for='clay'><img src="2.gif" width="18" height="12">Clay: <input id='clay' name='clay' value="0" onkeyup="totalResources();"/></label>
+		    <label for='iron'><img src="3.gif" width="18" height="12">Iron: <input id='iron' name='iron' value="0" onkeyup="totalResources();"/></label>
+		    <lable for='crop'><img src="4.gif" width="18" height="12">Crop: <input id='crop' name='crop' value="0" onkeyup="totalResources();"/></label>
+		   <br/><br/>
+		    <label for='total'>Total Resources: <input id='total' name='total' value="0"/></label>
+		   <br/><br/>
+		    <label for='race'>Tribe:
+			<select name='race' id='race' onchange="updateTroops(this.value);">
+			  <option value='gaul'>Gaul</option>
+			  <option value='roman'>Roman</option>
+			  <option value='teuton'>Teuton</option>
+			</select>
+		    </label>
+		   <br/><br/>
+			<div id='slidercontainer'>
+			<p id='info'>Each slider is a percentage of total resources to allocate to each troop type.</p>
+		    <dl>
+        		<dt><label for='slider-1' id='slider-1-label'>Troop: </label></dt>
+			<dd>
+			  <input name="slider1" id="slider-1" type="text" title="Range: 0 - 100" class="fd_range_0_100 fd_slider_cb_update_updateTroopCount fd_slider_cn_extraclass fd_tween" value="0" />
+			  Quantity:<span id='tq-1'>0</span>
+				<div class='attribs'>
+			  <img src="http://help.travian.se/images/misc/att_all.gif" width="16" height="16">
+			  <span id='ap-1'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_i.gif" width="16" height="16"> 
+			  <span id='di-1'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_c.gif" width="16" height="16"> 
+			  <span id='dc-1'>0</span>
+				</div>
+			</dd>
+			<dt><label for='slider-2' id='slider-2-label'>Troop: </label></dt>
+			<dd>
+			  <input name="slider2" id="slider-2" type="text" title="Range: 0 - 100" class="fd_range_0_100 fd_slider_cb_update_updateTroopCount fd_slider_cn_extraclass fd_tween" value="0" />
+			  Quantity:<span id='tq-2'>0</span>
+				<div class='attribs'>
+			  <img src="http://help.travian.se/images/misc/att_all.gif" width="16" height="16">
+			  <span id='ap-2'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_i.gif" width="16" height="16"> 
+			  <span id='di-2'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_c.gif" width="16" height="16"> 
+			  <span id='dc-2'>0</span>
+				</div>
+			</dd>
+			<dt><label for='slider-3' id='slider-3-label'>Troop: </label></dt>
+			<dd>
+			  <input name="slider3" id="slider-3" type="text" title="Range: 0 - 100" class="fd_range_0_100 fd_slider_cb_update_updateTroopCount fd_slider_cn_extraclass fd_tween" value="0" />
+			  Quantity:<span id='tq-3'>0</span>
+				<div class='attribs'>
+			  <img src="http://help.travian.se/images/misc/att_all.gif" width="16" height="16">
+			  <span id='ap-3'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_i.gif" width="16" height="16"> 
+			  <span id='di-3'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_c.gif" width="16" height="16"> 
+			  <span id='dc-3'>0</span>
+				</div>
+			</dd>
+			<dt><label for='slider-4' id='slider-4-label'>Troop: </label></dt>
+			<dd>
+			  <input name="slider4" id="slider-4" type="text" title="Range: 0 - 100" class="fd_range_0_100 fd_slider_cb_update_updateTroopCount fd_slider_cn_extraclass fd_tween" value="0" />
+			  Quantity:<span id='tq-4'>0</span>
+				<div class='attribs'>
+			  <img src="http://help.travian.se/images/misc/att_all.gif" width="16" height="16">
+			  <span id='ap-4'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_i.gif" width="16" height="16"> 
+			  <span id='di-4'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_c.gif" width="16" height="16"> 
+			  <span id='dc-4'>0</span>
+				</div>
+			</dd>
+			<dt><label for='slider-5' id='slider-5-label'>Troop: </label></dt>
+			<dd>
+			  <input name="slider5" id="slider-5" type="text" title="Range: 0 - 100" class="fd_range_0_100 fd_slider_cb_update_updateTroopCount fd_slider_cn_extraclass fd_tween" value="0" />
+			  Quantity:<span id='tq-5'>0</span>
+				<div class='attribs'>
+			  <img src="http://help.travian.se/images/misc/att_all.gif" width="16" height="16">
+			  <span id='ap-5'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_i.gif" width="16" height="16"> 
+			  <span id='di-5'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_c.gif" width="16" height="16"> 
+			  <span id='dc-5'>0</span>
+				</div>
+			</dd>
+			<dt><label for='slider-6' id='slider-6-label'>Troop: </label></dt>
+			<dd>
+			  <input name="slider6" id="slider-6" type="text" title="Range: 0 - 100" class="fd_range_0_100 fd_slider_cb_update_updateTroopCount fd_slider_cn_extraclass fd_tween" value="0" />
+			  Quantity:<span id='tq-6'>0</span>
+				<div class='attribs'>
+			  <img src="http://help.travian.se/images/misc/att_all.gif" width="16" height="16">
+			  <span id='ap-6'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_i.gif" width="16" height="16"> 
+			  <span id='di-6'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_c.gif" width="16" height="16"> 
+			  <span id='dc-6'>0</span>
+				</div>
+			</dd>
+			<dt><label for='slider-7' id='slider-7-label'>Troop: </label></dt>
+			<dd>
+			  <input name="slider7" id="slider-7" type="text" title="Range: 0 - 100" class="fd_range_0_100 fd_slider_cb_update_updateTroopCount fd_slider_cn_extraclass fd_tween" value="0" />
+			  Quantity:<span id='tq-7'>0</span>
+				<div class='attribs'>
+			  <img src="http://help.travian.se/images/misc/att_all.gif" width="16" height="16">
+			  <span id='ap-7'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_i.gif" width="16" height="16"> 
+			  <span id='di-7'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_c.gif" width="16" height="16"> 
+			  <span id='dc-7'>0</span>
+				</div>
+			</dd>
+			<dt><label for='slider-8' id='slider-8-label'>Troop: </label></dt>
+			<dd>
+			  <input name="slider8" id="slider-8" type="text" title="Range: 0 - 100" class="fd_range_0_100 fd_slider_cb_update_updateTroopCount fd_slider_cn_extraclass fd_tween" value="0" />
+			  Quantity:<span id='tq-8'>0</span>
+				<div class='attribs'>
+			  <img src="http://help.travian.se/images/misc/att_all.gif" width="16" height="16">
+			  <span id='ap-8'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_i.gif" width="16" height="16"> 
+			  <span id='di-8'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_c.gif" width="16" height="16"> 
+			  <span id='dc-8'>0</span>
+				</div>
+			</dd>
+			<dt><label for='slider-9' id='slider-9-label'>Troop: </label></dt>
+			<dd>
+			  <input name="slider9" id="slider-9" type="text" title="Range: 0 - 100" class="fd_range_0_100 fd_slider_cb_update_updateTroopCount fd_slider_cn_extraclass fd_tween" value="0" />
+			  Quantity:<span id='tq-9'>0</span>
+				<div class='attribs'>
+			  <img src="http://help.travian.se/images/misc/att_all.gif" width="16" height="16">
+			  <span id='ap-9'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_i.gif" width="16" height="16"> 
+			  <span id='di-9'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_c.gif" width="16" height="16"> 
+			  <span id='dc-9'>0</span>
+				</div>
+			</dd>
+			<dt><label for='slider-10' id='slider-10-label'>Troop: </label></dt>
+			<dd>
+			  <input name="slider10" id="slider-10" type="text" title="Range: 0 - 100" class="fd_range_0_100 fd_slider_cb_update_updateTroopCount fd_slider_cn_extraclass fd_tween" value="0" />
+			  Quantity:<span id='tq-10'>0</span>
+				<div class='attribs'>
+			  <img src="http://help.travian.se/images/misc/att_all.gif" width="16" height="16">
+			  <span id='ap-10'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_i.gif" width="16" height="16"> 
+			  <span id='di-10'>0</span>
+			  <img src="http://help.travian.se/images/misc/def_c.gif" width="16" height="16"> 
+			  <span id='dc-10'>0</span>
+				</div>
+			</dd>
+		    </dl>
+			</div>
+		  </form>
+		</div>
+		<div id='resourcesplit'>
+      <table width="588" align="center" style="border: 1px solid #c6c3c6;" cellpadding="0" cellspacing="0">
+        <trborder: 1px solid #c6c3c6;"> 
+        <td colspan="4" height="17" background="slay.jpg"> 
+          <div align="left"><b></b></div>
+          <div align="center"><b><font face="Verdana, Arial, Helvetica, sans-serif" size="2">How the material should be</font></b></div>
+        </td>
+        </tr>
+        <tr style="border: 1px solid #c6c3c6;"> 
+          <td height="20" style="padding-left: 30px; border-bottom: 1px solid #c6c3c6; border-top: 1px solid #c6c3c6;" width="97" class="bildtabell" bgcolor="#f7f7f7" valign="middle" align="center"> 
+            <div align="center"><img src="1.gif" width="18" height="12"><strong>Wood</strong></div>
+          </td>
+          <td height="20" style="padding-left: 30px; border-left: 1px solid #c6c3c6; border-bottom: 1px solid #c6c3c6; border-top: 1px solid #c6c3c6;" width="97" bgcolor="#f7f7f7" align="center" valign="middle"> 
+            <div align="center"><img src="2.gif" width="18" height="12"><strong>Clay</strong></div>
+          </td>
+          <td height="20" style="padding-left: 30px; border-left: 1px solid #c6c3c6; border-bottom: 1px solid #c6c3c6; border-top: 1px solid #c6c3c6;" width="97" bgcolor="#f7f7f7" align="center" valign="middle"> 
+            <div align="center"><img src="3.gif" width="18" height="12"><strong>Iron</strong></div>
+          </td>
+          <td height="20" style="padding-left: 27px; border-left: 1px solid #c6c3c6; border-bottom: 1px solid #c6c3c6; border-top: 1px solid #c6c3c6;" width="97" bgcolor="#f7f7f7" align="center" valign="middle"> 
+            <div align="center"><img src="4.gif" width="18" height="12"><strong>Crop</strong></div>
+          </td>
+        </tr>
+        <tr> 
+          <td style="width:97;" height="20" align="center" valign="middle"> 
+            <div align="center"><br>
+                <div align="center"><span id='totalwood'>0</span></div>
+            </div>
+          </td>
+          <td style="border-left: 1px solid #c6c3c6;" width="97" height="20"> 
+            <div align="center"><br>
+                <div align="center"><span id='totalclay'>0</span></div>
+            </div>
+          </td>
+          <td style="border-left: 1px solid #c6c3c6;" width="97" height="20"> 
+            <div align="center"><br>
+                <div align="center"><span id='totaliron'>0</span></div>
+            </div>
+          </td>
+          <td width="97" height="20" style="border-left: 1px solid #c6c3c6;"> 
+            <div align="center"><br>
+                <div align="center"><span id='totalcrop'>0</span></div>
+            </div>
+          </td>
+        </tr>
+	<br/>
+        <tr> 
+          <td style="border-top: 1px solid #c6c3c6;" colspan="2" height="10"> 
+            <div align="center">Quantity of troops:<span id='totaltroops'>0</span></div>
+          </td>
+          <td style="border-top:1px solid #c6c3c6; border-left: 1px solid #c6c3c6; border-top: 1px solid #c6c3c6;" colspan="1" height="10">Extra: <span id='rest'>0</span></td>
+          <td style="border-top: 1px solid #c6c3c6; border-left: 1px solid #c6c3c6;" height="10" ><span id='cropuse'>0</span><img src="http://img.travian.com/se/std/img/un/r/5.gif" align="absmiddle"></td>
+        </tr>
+
+        <tr align="center" valign="middle"> 
+          <td style="border-top: 1px solid #c6c3c6;" colspan="2" height="21"><img src="http://help.travian.se/images/misc/att_all.gif" width="16" height="16" align="absmiddle">
+            <span id='totalap'>0</span></td>
+          <td style="border-top: 1px solid #c6c3c6; border-left: 1px solid #c6c3c6;" height="21" width="196"><img src="http://help.travian.se/images/misc/def_i.gif" width="16" height="16" align="absmiddle" > 
+            <span id='totaldi'>0</span></td>
+          <td style="border-top: 1px solid #c6c3c6; border-left: 1px solid #c6c3c6;" height="21" width="196""><img src="http://help.travian.se/images/misc/def_c.gif" width="16" height="16" align="absmiddle"> 
+            <span id='totaldc'>0</span></td>
+        </tr>
+      </table>
+		</div>
+	  </div>
+	</body>
+</html>  
